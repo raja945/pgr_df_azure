@@ -1,0 +1,9 @@
+{
+	"name": "pgrDF",
+	"location": "southindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "f14b459b-8964-4a48-a4ee-2a6a193ddef1",
+		"tenantId": "e6b5eec4-b486-4f68-ba47-e292bf585c0a"
+	}
+}
