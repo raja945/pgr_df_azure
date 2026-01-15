@@ -11,7 +11,8 @@
 			"username": "root",
 			"sslMode": 0,
 			"driverVersion": "v2",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIxMmYxNWJiNS00MzhhLTQ5MjYtYjk1Yi0xZDI5ZjZmMmNhMmQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"connectionString": "server=YOUR_SERVER;port=3306;database=YOUR_DB;user=YOUR_USER;password=YOUR_PASSWORD;Allow User Variables=True",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI1ZThjZTc2MS05MGU2LTQxNjYtOGZkYS03NjBkMTQzMTQ2MDAiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "pgrintegrationRuntime1",
