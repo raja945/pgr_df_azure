@@ -8,8 +8,23 @@
 		"AzureDataLakeStorage1_accountKey": {
 			"value": ""
 		},
+		"MySql1_password": {
+			"value": ""
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://pgrstoragecontainer.dfs.core.windows.net/"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://pgr-keyvault.vault.azure.net/"
+		},
+		"MySql1_properties_typeProperties_server": {
+			"value": "localhost"
+		},
+		"MySql1_properties_typeProperties_database": {
+			"value": "batch26"
+		},
+		"MySql1_properties_typeProperties_username": {
+			"value": "root"
 		},
 		"containerUri": {
 			"value": ""
