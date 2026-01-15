@@ -1,0 +1,6 @@
+{
+	"name": "pgrintegrationRuntime1",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}
