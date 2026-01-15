@@ -76,38 +76,17 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "*.csv",
 						"folderPath": "MySQL",
 						"fileSystem": "pgr-container"
 					},
-					"columnDelimiter": "|",
+					"columnDelimiter": ",",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
 				"schema": [
 					{
-						"name": "id",
-						"type": "String"
-					},
-					{
-						"name": "category",
-						"type": "String"
-					},
-					{
-						"name": "subcategory",
-						"type": "String"
-					},
-					{
-						"name": "product",
-						"type": "String"
-					},
-					{
-						"name": "price",
-						"type": "String"
-					},
-					{
-						"name": "place",
+						"name": "id,category,subcategory,product,price,place",
 						"type": "String"
 					}
 				]
@@ -150,6 +129,8 @@
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
 									"recursive": true,
+									"wildcardFolderPath": "MySQL",
+									"wildcardFileName": "*.csv",
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
