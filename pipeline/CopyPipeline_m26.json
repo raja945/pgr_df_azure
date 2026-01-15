@@ -26,18 +26,7 @@
 				],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobFSReadSettings",
-							"recursive": true,
-							"wildcardFolderPath": "MySQL",
-							"wildcardFileName": "*.csv",
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings",
-							"skipLineCount": 0
-						}
+						"type": "MySqlSource"
 					},
 					"sink": {
 						"type": "ParquetSink",
@@ -64,7 +53,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SourceDataset_m26",
+						"referenceName": "Source_MySqlTable1",
 						"type": "DatasetReference"
 					}
 				],
