@@ -1,19 +1,22 @@
 {
-	"name": "DestDataset_mysql",
+	"name": "DestDataset_CSV",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
-		"type": "Parquet",
+		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"folderPath": "Delta/Bronze/mysql_rawfiles",
 				"fileSystem": "pgr-container"
 			},
-			"compressionCodec": "none"
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
 		},
 		"schema": []
 	}

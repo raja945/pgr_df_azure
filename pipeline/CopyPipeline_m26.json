@@ -33,15 +33,17 @@
 						}
 					},
 					"sink": {
-						"type": "ParquetSink",
+						"type": "DelimitedTextSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings",
 							"copyBehavior": "PreserveHierarchy"
 						},
 						"formatSettings": {
-							"type": "ParquetWriteSettings",
+							"type": "DelimitedTextWriteSettings",
 							"maxRowsPerFile": 1000,
-							"fileNamePrefix": ""
+							"fileNamePrefix": "",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
 						}
 					},
 					"enableStaging": false,
@@ -63,7 +65,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DestDataset_mysql",
+						"referenceName": "DestDataset_CSV",
 						"type": "DatasetReference"
 					}
 				]
