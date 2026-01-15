@@ -11,8 +11,8 @@
 			"username": "root",
 			"sslMode": 0,
 			"driverVersion": "v2",
-			"connectionString": "server=YOUR_SERVER;port=3306;database=YOUR_DB;user=YOUR_USER;password=YOUR_PASSWORD;Allow User Variables=True",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI1ZThjZTc2MS05MGU2LTQxNjYtOGZkYS03NjBkMTQzMTQ2MDAiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"connectionString": "server=localhost;port=3306;database=product_orders;user=root;password=Luffy@0998;Allow User Variables=True",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIwZTk0ODBmMC05NzRhLTQ0YzUtYjBkNS1hMWEzZmNkMzUyOTQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "pgrintegrationRuntime1",
