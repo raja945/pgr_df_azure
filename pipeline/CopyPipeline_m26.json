@@ -26,7 +26,11 @@
 				],
 				"typeProperties": {
 					"source": {
-						"type": "MySqlSource"
+						"type": "MySqlSource",
+						"query": {
+							"value": "SELECT *\nFROM orders\nWHERE updated_at > @LastLoadedTimestamp\n",
+							"type": "Expression"
+						}
 					},
 					"sink": {
 						"type": "ParquetSink",
@@ -53,13 +57,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Source_MySqlTable1",
+						"referenceName": "SrcDataset_MySqlTable",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DestinationDataset_m26",
+						"referenceName": "DestDataset_mysql",
 						"type": "DatasetReference"
 					}
 				]

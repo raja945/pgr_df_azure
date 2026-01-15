@@ -1,5 +1,5 @@
 {
-	"name": "DestinationDataset_m26",
+	"name": "DestDataset_mysql",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "Delta/Bronze",
+				"folderPath": "Delta/Bronze/mysql_rawfiles",
 				"fileSystem": "pgr-container"
 			},
 			"compressionCodec": "snappy"

@@ -1,5 +1,5 @@
 {
-	"name": "Source_MySqlTable1",
+	"name": "SrcDataset_MySqlTable",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "MySql1",
