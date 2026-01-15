@@ -21,7 +21,7 @@
 			"value": "localhost"
 		},
 		"MySql1_properties_typeProperties_database": {
-			"value": "batch26"
+			"value": "product_orders"
 		},
 		"MySql1_properties_typeProperties_username": {
 			"value": "root"

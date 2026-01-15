@@ -29,7 +29,7 @@
 		},
 		"MySql1_properties_typeProperties_database": {
 			"type": "string",
-			"defaultValue": "batch26"
+			"defaultValue": "product_orders"
 		},
 		"MySql1_properties_typeProperties_username": {
 			"type": "string",
@@ -81,7 +81,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DestinationDataset_m26')]",
+			"name": "[concat(parameters('factoryName'), '/DestDataset_mysql')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -94,45 +94,12 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"folderPath": "Delta/Bronze",
+						"folderPath": "Delta/Bronze/mysql_rawfiles",
 						"fileSystem": "pgr-container"
 					},
 					"compressionCodec": "snappy"
 				},
 				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_m26')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "MySQL",
-						"fileSystem": "pgr-container"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "id,category,subcategory,product,price,place",
-						"type": "String"
-					}
-				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
@@ -167,7 +134,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Source_MySqlTable1')]",
+			"name": "[concat(parameters('factoryName'), '/SrcDataset_MySqlTable')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -216,7 +183,11 @@
 						],
 						"typeProperties": {
 							"source": {
-								"type": "MySqlSource"
+								"type": "MySqlSource",
+								"query": {
+									"value": "SELECT *\nFROM orders\nWHERE updated_at > @LastLoadedTimestamp\n",
+									"type": "Expression"
+								}
 							},
 							"sink": {
 								"type": "ParquetSink",
@@ -243,14 +214,14 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "Source_MySqlTable1",
+								"referenceName": "SrcDataset_MySqlTable",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "DestinationDataset_m26",
+								"referenceName": "DestDataset_mysql",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -263,8 +234,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Source_MySqlTable1')]",
-				"[concat(variables('factoryId'), '/datasets/DestinationDataset_m26')]"
+				"[concat(variables('factoryId'), '/datasets/SrcDataset_MySqlTable')]",
+				"[concat(variables('factoryId'), '/datasets/DestDataset_mysql')]"
 			]
 		},
 		{

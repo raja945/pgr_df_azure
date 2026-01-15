@@ -29,7 +29,7 @@
 		},
 		"MySql1_properties_typeProperties_database": {
 			"type": "string",
-			"defaultValue": "batch26"
+			"defaultValue": "product_orders"
 		},
 		"MySql1_properties_typeProperties_username": {
 			"type": "string",
