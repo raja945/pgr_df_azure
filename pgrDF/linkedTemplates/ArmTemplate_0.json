@@ -81,6 +81,34 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DestDataset_CSV')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "Delta/Bronze/mysql_rawfiles",
+						"fileSystem": "pgr-container"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DestDataset_mysql')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -97,7 +125,7 @@
 						"folderPath": "Delta/Bronze/mysql_rawfiles",
 						"fileSystem": "pgr-container"
 					},
-					"compressionCodec": "snappy"
+					"compressionCodec": "none"
 				},
 				"schema": []
 			},
@@ -190,15 +218,17 @@
 								}
 							},
 							"sink": {
-								"type": "ParquetSink",
+								"type": "DelimitedTextSink",
 								"storeSettings": {
 									"type": "AzureBlobFSWriteSettings",
 									"copyBehavior": "PreserveHierarchy"
 								},
 								"formatSettings": {
-									"type": "ParquetWriteSettings",
+									"type": "DelimitedTextWriteSettings",
 									"maxRowsPerFile": 1000,
-									"fileNamePrefix": ""
+									"fileNamePrefix": "",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
 								}
 							},
 							"enableStaging": false,
@@ -221,7 +251,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "DestDataset_mysql",
+								"referenceName": "DestDataset_CSV",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -235,7 +265,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/SrcDataset_MySqlTable')]",
-				"[concat(variables('factoryId'), '/datasets/DestDataset_mysql')]"
+				"[concat(variables('factoryId'), '/datasets/DestDataset_CSV')]"
 			]
 		},
 		{
