@@ -77,7 +77,8 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2026-01-23T16:12:50Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks1')]"
@@ -163,7 +164,8 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2026-01-15T15:08:38Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/SrcDataset_MySqlTable')]",
@@ -278,7 +280,7 @@
 					"newClusterSparkEnvVars": {
 						"PYSPARK_PYTHON": "/databricks/python3/bin/python3"
 					},
-					"newClusterVersion": "10.4.x-scala2.12",
+					"newClusterVersion": "14.3.x-scala2.12",
 					"clusterOption": "Autoscaling",
 					"newClusterInitScripts": []
 				}
