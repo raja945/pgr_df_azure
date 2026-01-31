@@ -1,5 +1,5 @@
 {
-	"name": "P001_SrcDataset_MySqlTable",
+	"name": "P001_SrcDataset_watermarkTable",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "MySql1",
@@ -9,7 +9,7 @@
 		"type": "MySqlTable",
 		"schema": [],
 		"typeProperties": {
-			"tableName": "`orders`"
+			"tableName": "`watermarktable`"
 		}
 	}
 }

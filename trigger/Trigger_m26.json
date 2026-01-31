@@ -6,7 +6,7 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "CopyPipeline_m26",
+					"referenceName": "P001_Ingestion_Pipeline",
 					"type": "PipelineReference"
 				}
 			}

@@ -1,12 +1,25 @@
 {
-	"name": "CopyPipeline_m26",
+	"name": "P001_Ingestion_Pipeline",
 	"properties": {
 		"description": "copy data from mysql to bronze",
 		"activities": [
 			{
 				"name": "Copy_m26",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "LookupOldWatermark",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "LookupNewWatermark",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -17,18 +30,18 @@
 				"userProperties": [
 					{
 						"name": "Source",
-						"value": "pgr-container/MySQL/supermarket_delimiter.csv"
+						"value": "`orders`"
 					},
 					{
 						"name": "Destination",
-						"value": "pgr-container/Delta/Bronze/"
+						"value": "pgr-container/Delta/Bronze/mysql_rawfiles/"
 					}
 				],
 				"typeProperties": {
 					"source": {
 						"type": "MySqlSource",
 						"query": {
-							"value": "SELECT *\nFROM orders\nWHERE updated_at > @LastLoadedTimestamp\n",
+							"value": "SELECT * FROM orders \nWHERE updated_at > '@{activity('LookupOldWatermark').output.firstRow.WatermarkValue}' \nAND updated_at <= '@{activity('LookupNewWatermark').output.firstRow.NewWatermarkValue}'\n",
 							"type": "Expression"
 						}
 					},
@@ -43,7 +56,10 @@
 							"maxRowsPerFile": 1000,
 							"fileNamePrefix": "",
 							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"fileExtension": {
+								"value": "@concat('_orders_table_', formatDateTime(utcnow(), 'yyyy_MM_dd_HHmmss'), '.parquet')\n",
+								"type": "Expression"
+							}
 						}
 					},
 					"enableStaging": false,
@@ -59,16 +75,95 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SrcDataset_MySqlTable",
+						"referenceName": "P001_SrcDataset_MySqlTable",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DestDataset_CSV",
+						"referenceName": "P001_DestDataset_CSV",
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "LookupOldWatermark",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "MySqlSource"
+					},
+					"dataset": {
+						"referenceName": "P001_SrcDataset_watermarkTable",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": true
+				}
+			},
+			{
+				"name": "LookupNewWatermark",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "MySqlSource",
+						"query": {
+							"value": "SELECT MAX(updated_at) as NewWatermarkValue FROM orders",
+							"type": "Expression"
+						}
+					},
+					"dataset": {
+						"referenceName": "P001_SrcDataset_MySqlTable",
+						"type": "DatasetReference"
+					}
+				}
+			},
+			{
+				"name": "UpdateWatermark",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "Copy_m26",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "MySqlSource",
+						"query": "UPDATE watermarktable\r\nSET WatermarkValue = '@{activity('LookupNewWatermark').output.firstRow.NewWatermarkValue}'\r\nWHERE TableName = 'orders';\r\n\r\nSELECT 1 AS dummy;\r\n"
+					},
+					"dataset": {
+						"referenceName": "P001_SrcDataset_watermarkTable",
+						"type": "DatasetReference"
+					}
+				}
 			}
 		],
 		"annotations": []
