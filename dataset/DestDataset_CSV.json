@@ -1,5 +1,5 @@
 {
-	"name": "P001_DestDataset_CSV",
+	"name": "DestDataset_CSV",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "Delta/Bronze/mysql_rawfiles",
+				"folderPath": "Delta/Bronze",
 				"fileSystem": "pgr-container"
 			},
 			"columnDelimiter": ",",
