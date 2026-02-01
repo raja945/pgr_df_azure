@@ -39,25 +39,19 @@
 				],
 				"typeProperties": {
 					"source": {
-						"type": "MySqlSource",
-						"query": {
-							"value": "SELECT * FROM orders \nWHERE updated_at > '@{activity('LookupOldWatermark').output.firstRow.WatermarkValue}' \nAND updated_at <= '@{activity('LookupNewWatermark').output.firstRow.NewWatermarkValue}'\n",
-							"type": "Expression"
-						}
+						"type": "MySqlSource"
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "ParquetSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings",
 							"copyBehavior": "PreserveHierarchy"
 						},
 						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
+							"type": "ParquetWriteSettings",
 							"maxRowsPerFile": 1000,
-							"fileNamePrefix": "",
-							"quoteAllText": true,
-							"fileExtension": {
-								"value": "@concat('_orders_table_', formatDateTime(utcnow(), 'yyyy_MM_dd_HHmmss'), '.parquet')\n",
+							"fileNamePrefix": {
+								"value": "@concat(\n    'orders_table_', \n    formatDateTime(utcnow(), 'yyyy_MM_dd_HHmmss'), \n    '.parquet'\n)",
 								"type": "Expression"
 							}
 						}
@@ -81,7 +75,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "P001_DestDataset_CSV",
+						"referenceName": "P001_DestDataset_parquet",
 						"type": "DatasetReference"
 					}
 				]
@@ -157,7 +151,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "MySqlSource",
-						"query": "UPDATE watermarktable\r\nSET WatermarkValue = '@{activity('LookupNewWatermark').output.firstRow.NewWatermarkValue}'\r\nWHERE TableName = 'orders';\r\n\r\nSELECT 1 AS dummy;\r\n"
+						"query": {
+							"value": "UPDATE watermarktable\r\nSET WatermarkValue = '@{activity('LookupNewWatermark').output.firstRow.NewWatermarkValue}'\r\nWHERE TableName = 'orders';\r\n\r\nSELECT 1 AS dummy;\r\n",
+							"type": "Expression"
+						}
 					},
 					"dataset": {
 						"referenceName": "P001_SrcDataset_watermarkTable",
